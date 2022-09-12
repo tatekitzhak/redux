@@ -1,11 +1,16 @@
 import React from 'react';
+import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
 
-function App(props) {
-    return (
-        <div>
-            App
-        </div>
-    );
+import './App.css';
+
+function App() {
+  return (
+    <div className='App'>
+      <AddTodo />
+      <Todos />
+    </div>
+  );
 }
 
 export default App;
