@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo } from '../store/features/todos/todosSlice';
 
-export default function Todo(props) {
+export default function TodoView(props) {
   const { todo } = props;
   const dispatch = useDispatch();
 
@@ -21,6 +21,7 @@ export default function Todo(props) {
   const cancelEdit = () => {
     setIsEdit(false);
   };
+
 
   return isEdit ? (
     <form onSubmit={saveTodo}>

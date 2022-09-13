@@ -6,25 +6,25 @@ export const todosSlice = createSlice({
   initialState: [],
   reducers: {
     addTodo: (state, action) => {
-      console.log('addTodo(state, action):',state, action)
       const todo = {
         id: uuid(),
         text: action.payload,
       };
-
-
       return [...state, todo];
     },
+
     updateTodo: (state, action) => {
       const { id, text } = action.payload;
 
       const todo = state.find((todo) => todo.id === id);
       todo.text = text;
     },
+
     deleteTodo: (state, action) => {
       return state.filter((todo) => todo.id !== action.payload);
     },
   },
+
 });
 
 export const { addTodo, updateTodo, deleteTodo } = todosSlice.actions;
