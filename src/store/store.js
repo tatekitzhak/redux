@@ -1,24 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import todosReducer from './features/todos/todosSlice';
-/**
- * https://dev.to/raaynaldo/redux-toolkit-setup-tutorial-5fjf
- * https://github.com/raaynaldo/redux-toolkit-tutorial
- */
-
-export default configureStore({
-  reducer: {
-    todos: todosReducer,
-  },
-});
-
-/**
- 
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { combineReducers } from '@reduxjs/toolkit'
-import { apiSlice } from '../features/apiSlice'
-import useCartReducer from '../features/useCartSlice'
+import { apiSlice } from '@/store/features/apis/apiSlice';
+import useCartReducer from '@/store/features/slices/useCartSlice';
 
 import storage from 'redux-persist/lib/storage'
 
@@ -58,6 +43,3 @@ const store = configureStore({
 setupListeners(store.dispatch)
 
 export default store
-
-
- */
