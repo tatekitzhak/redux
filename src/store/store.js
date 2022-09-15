@@ -1,28 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import todosReducer from './features/todos/todosSlice';
-/**
- * https://dev.to/raaynaldo/redux-toolkit-setup-tutorial-5fjf
- * https://github.com/raaynaldo/redux-toolkit-tutorial
- */
-
-export default configureStore({
-  reducer: {
-    todos: todosReducer,
-  },
-});
-
-/**
- 
-import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
-
-import { combineReducers } from '@reduxjs/toolkit'
-import { apiSlice } from '../features/apiSlice'
-import useCartReducer from '../features/useCartSlice'
-
-import storage from 'redux-persist/lib/storage'
-
-import {
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { 
+  persistStore,
   persistReducer,
   FLUSH,
   REHYDRATE,
@@ -30,20 +8,21 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+import todoReducer from '@/store/features/todos/todosSlice';
+
+const rootReducer = combineReducers({
+  todos: todoReducer,
+});
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
-  blacklist: ['apiProductSlice'],
+  storage,
 }
 
-export const rootReducers = combineReducers({
-  cart: useCartReducer,
-  [apiSlice.reducerPath]: apiSlice.reducer,
-})
-
-const persistedReducer = persistReducer(persistConfig, rootReducers)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
@@ -52,12 +31,8 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(apiSlice.middleware),
+    }),
 })
 
-setupListeners(store.dispatch)
-
-export default store
-
-
- */
+export const persistor = persistStore(store);
+export default store;
