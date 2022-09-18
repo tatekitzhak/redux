@@ -19,16 +19,47 @@ import {
   REGISTER,
 } from 'redux-persist';
 
+const rootReducers = combineReducers({
+  cart: useCartReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
+})
+
 const persistConfig = {
   key: 'root',
   storage: storage,
   blacklist: ['apiProductSlice'],
 }
 
-export const rootReducers = combineReducers({
-  cart: useCartReducer,
-  [apiSlice.reducerPath]: apiSlice.reducer,
-})
+/*
+
+** https://github.com/rt2zz/redux-persist
+** https://blog.reactnativecoach.com/the-definitive-guide-to-redux-persist-84738167975
+
+Blacklist & Whitelist
+By Example:
+
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  whitelist: ["state_which_you_want_to_persist"],       // Will be persisted
+  blacklist: ["state_which_you_do_not_want_to_persist"] // Will not be persisted
+};
+
+combineReducers({ 
+  auth: AuthReducer,
+  navigation: NavReducer, 
+  notes: NotesReducer
+});
+
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  blacklist: ["navigation"], // Will not be persisted
+  whitelist: ["notes", auth],      // Will be persisted
+};
+
+*/
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)
 
