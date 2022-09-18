@@ -1,11 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
+import React from 'react';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
+import { Provider } from 'react-redux';
 
-import { combineReducers } from '@reduxjs/toolkit'
 import { apiSlice } from '@/store/features/apis/apiSlice';
 import useCartReducer from '@/store/features/slices/useCartSlice';
-
-import storage from 'redux-persist/lib/storage'
 
 import {
   persistReducer,
@@ -15,7 +17,7 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
+} from 'redux-persist';
 
 const persistConfig = {
   key: 'root',
@@ -42,4 +44,16 @@ const store = configureStore({
 
 setupListeners(store.dispatch)
 
-export default store
+let persistor = persistStore(store)
+
+function ReduxWrapper(props) {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<p>Loading ....</p>}  persistor={persistor}>
+        {props.children}
+      </PersistGate>
+    </Provider>
+  )
+}
+
+export default ReduxWrapper;

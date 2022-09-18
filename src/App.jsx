@@ -1,11 +1,11 @@
 import React from 'react';
-//import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 import { Routes, Route } from 'react-router-dom'
 
 import Header from '@/components/header/Header'
-import Products from '@/components/products/Products'
+import Products from '@/components/products/Products';
 import Cart from '@/components/cart/Cart'
 
 function App() {
