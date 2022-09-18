@@ -4,6 +4,8 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
+import storageSession from 'redux-persist/lib/storage/session'
+
 import { Provider } from 'react-redux';
 
 import { apiSlice } from '@/store/features/apis/apiSlice';
@@ -27,6 +29,7 @@ const rootReducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: storage,
+  //storage:storageSession,
   blacklist: ['apiProductSlice'],
 }
 
@@ -65,12 +68,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducers)
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(apiSlice.middleware),
+    }).concat(apiSlice.middleware)
+  },
 })
 
 setupListeners(store.dispatch)
@@ -80,7 +84,7 @@ let persistor = persistStore(store)
 function ReduxWrapper(props) {
   return (
     <Provider store={store}>
-      <PersistGate loading={<p>Loading ....</p>}  persistor={persistor}>
+      <PersistGate loading={<p>Loading ....</p>} persistor={persistor}>
         {props.children}
       </PersistGate>
     </Provider>
