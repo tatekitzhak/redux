@@ -1,4 +1,7 @@
+import React from "react";
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { 
   persistStore,
   persistReducer,
@@ -34,5 +37,17 @@ const store = configureStore({
     }),
 })
 
-export const persistor = persistStore(store);
-export default store;
+const persistor = persistStore(store);
+
+
+function ReduxWrapper({children}) {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<h1>Loading ... </h1>} persistor={persistor}>
+        {children}
+      </PersistGate>
+    </Provider>
+  )
+}
+
+export default ReduxWrapper;
