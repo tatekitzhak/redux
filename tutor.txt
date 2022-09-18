@@ -1,4 +1,5 @@
 https://www.youtube.com/watch?v=sdlYNKjCGU0
 https://github.com/michey85/redux-toolkit-todo/tree/persist
+https://www.youtube.com/watch?v=pEzvtMb0HSI
 
 https://github.com/michey85/redux-toolkit-todo/tree/reselect
